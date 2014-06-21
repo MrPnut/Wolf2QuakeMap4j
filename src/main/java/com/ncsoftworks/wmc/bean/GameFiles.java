@@ -10,7 +10,6 @@ import java.io.File;
 /**
  * Created with IntelliJ IDEA.
  * User: Nick
- * Exception thrown during map convert failure
  */
 
 public class GameFiles {

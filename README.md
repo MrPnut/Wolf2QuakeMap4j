@@ -31,7 +31,7 @@ gradlew build
 ###To run:
 
 ```
-gradlew installApp
+gradlew installApp (to run it, run the batch file in build/install)
 ```
 
 -OR-
@@ -44,21 +44,21 @@ gradlew run -Pargs="--directory=..."
 
 ```
 usage: wmc4j
-    --convert-all             convert all maps to the location specified
-                              by output-directory
-    --directory <DIRECTORY>   sets the directory to look for wolfenstein
-                              files in (defaults to ./)
-    --display                 displays the map file information loaded
-                              from the gamemaps and maphead files
-    --gamemaps <GAMEMAPS>     sets the ABSOLUTE location to the gamemaps
-                              file (overrides --directory) (defaults to
-                              ./gamemaps.wl6)
-    --help                    print this message
-    --maphead <MAPHEAD>       sets the ABSOLUTE location of the maphead
-                              file (overrides --directory) (defaults to
-                              ./maphead.wl6
-    --output-directory        the directory that maps will be output to
-                              (default to ./)
-    --wadname                 the file location of a wad file for .map's
-                              (defaults to base.wad
+    --convert-all               convert all maps to the location specified
+                                by output-directory
+    --directory <DIRECTORY>     sets the directory to look for wolfenstein
+                                files in (defaults to ./)
+    --display                   displays the map file information loaded
+                                from the gamemaps and maphead files
+    --gamemaps <GAMEMAPS>       sets the ABSOLUTE location to the gamemaps
+                                file (overrides --directory) (defaults to
+                                ./gamemaps.wl6)
+    --help                      print this message
+    --maphead <MAPHEAD>         sets the ABSOLUTE location of the maphead
+                                file (overrides --directory) (defaults to
+                                ./maphead.wl6
+    --output-directory <OUTDIR> the directory that maps will be output to
+                                (default to ./)
+    --wadname <WADNAME>         the file location of a wad file for .map's
+                                (defaults to base.wad
 ```
