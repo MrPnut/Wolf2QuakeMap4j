@@ -1,0 +1,37 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'com.ncsoftworks.wmc.cli.Main'
+
+sourceCompatibility = 1.5
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'commons-cli', name: 'commons-cli', version: '1.2'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.3.2'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.2'
+    compile group: 'ch.qos.logback', name: 'logback-core', version: '1.1.2'
+}
+
+jar {
+    baseName = 'wqm4j'
+    version = '0.1.0'
+
+    manifest {
+        attributes "Implementation-Title" : "Wolfenstein -> Quake MAP converter"
+        attributes "Implementation-Version" : version
+        attributes "Main-Class" : mainClassName
+    }
+}
+
+run {
+    if (project.hasProperty('args')) {
+        args project.args.split(" ")
+    }
+}
+
+task wrapper(type: Wrapper) {}
