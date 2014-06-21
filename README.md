@@ -18,17 +18,29 @@ This is a _WORK_IN_PROGRESS_ Wolfenstein 3D map converter for Quake written in J
 - Todo perhaps:
   - A JavaFX UI to pick and choose quake textures to map to tiles
 
-To Compile / Run
+##To Compile / Run
 
 This project is built with Gradle and JDK 1.7.  It should be compatible with JDK 1.5.
 
-To compile:
-Simply gradlew build
+###To compile:
 
-To run:
-You can either assembly into an application with gradlew installApp -OR- you can run it with gradlew run -Pargs="--directory=..."
+```
+gradlew build
+```
 
-Command line options:
+###To run:
+
+```
+gradlew installApp
+```
+
+-OR-
+
+```
+gradlew run -Pargs="--directory=..."
+```
+
+###Command line options:
 
 ```
 usage: wmc4j
