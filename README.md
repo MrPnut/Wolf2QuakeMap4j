@@ -30,6 +30,7 @@ You can either assembly into an application with gradlew installApp -OR- you can
 
 Command line options:
 
+```
 usage: wmc4j
     --convert-all             convert all maps to the location specified
                               by output-directory
@@ -48,3 +49,4 @@ usage: wmc4j
                               (default to ./)
     --wadname                 the file location of a wad file for .map's
                               (defaults to base.wad
+```
