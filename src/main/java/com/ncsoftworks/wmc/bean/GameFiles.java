@@ -13,8 +13,9 @@ import java.io.File;
  */
 
 public class GameFiles {
-    private File gameMapsFile;
-    private File mapHeadFile;
+    private final File gameMapsFile;
+    private final File mapHeadFile;
+    private final File textureMappingPropertiesFile;
 
     public File getGameMapsFile() {
         return gameMapsFile;
@@ -24,9 +25,14 @@ public class GameFiles {
         return mapHeadFile;
     }
 
-    public GameFiles(File gameMapsFile, File mapHeadFile) {
+    public File getTextureMappingPropertiesFile() {
+        return textureMappingPropertiesFile;
+    }
+
+    public GameFiles(File gameMapsFile, File mapHeadFile, File textureMappingPropertiesFile) {
         this.gameMapsFile = gameMapsFile;
         this.mapHeadFile = mapHeadFile;
+        this.textureMappingPropertiesFile = textureMappingPropertiesFile;
     }
 
     public static GameFiles fromConverterOptions(ConverterOptions converterOptions) {
@@ -37,7 +43,11 @@ public class GameFiles {
                                       converterOptions.getMapHeadLocation(),
                                       converterOptions.getDirectory());
 
-        return new GameFiles(gameMapsFile, mapHeadFile);
+        File textureMappingPropertiesFile = locateFile(Constants.TEXTURE_MAPPING_PROPERTIES_FILE,
+                                                       converterOptions.getTextureMappingLocation(),
+                                                       converterOptions.getDirectory());
+
+        return new GameFiles(gameMapsFile, mapHeadFile, textureMappingPropertiesFile);
     }
 
     private static File locateFile(String fileName, String fileLocation, String directory) {

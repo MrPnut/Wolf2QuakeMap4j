@@ -27,5 +27,13 @@ public class QuakeBrush {
         return planes;
     }
 
+    public void setTexture(String texture) {
+        this.texture = texture;
+    }
+
+    public String getTexture() {
+        return texture;
+    }
+
 }
 

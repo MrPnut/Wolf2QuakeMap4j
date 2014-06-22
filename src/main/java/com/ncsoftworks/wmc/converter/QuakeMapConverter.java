@@ -4,10 +4,11 @@ import com.ncsoftworks.wmc.bean.*;
 import com.ncsoftworks.wmc.exception.MapConverterException;
 import com.ncsoftworks.wmc.util.TranslationUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,37 +18,43 @@ import java.util.Map;
 
 public class QuakeMapConverter {
 
+    private static final Logger log = LoggerFactory.getLogger(QuakeMapConverter.class);
+
     private static List<Integer> multipliers = TranslationUtils.getInstance().getTileToBoxMultipliers();
 
-    private String wadName = "base.wad";
+    private final String wadName;
+    private final Properties textureMappings;
 
     public QuakeMapConverter() {
-        this(null);
+        this("base.wad", new Properties());
     }
 
-    public QuakeMapConverter(String wadName) {
-        if (StringUtils.isNotBlank(wadName)) {
-            this.wadName = wadName;
-        }
+    public QuakeMapConverter(String wadName, Properties textureMappings) {
+        this.wadName = wadName;
+        this.textureMappings = textureMappings;
     }
 
     public QuakeMap convert(WolfensteinMap mapFile) throws MapConverterException {
+        log.info("Converting map: " + mapFile.getName());
 
         QuakeMap quakeMap = new QuakeMap(0, 0, wadName);
-
         doConvert(mapFile, quakeMap);
 
         return quakeMap;
     }
 
-    private static void doConvert(WolfensteinMap in, QuakeMap out) {
+    private void doConvert(WolfensteinMap in, QuakeMap out) {
 
         Map<Integer, Map<Integer, Integer>> tileData = in.getTileData();
 
         // TODO: More research needs to be done with this.  The map isn't "sealed" when the preprocess logic
         // runs.  It may have something to do with tile number values
+        // tileData = preProcess(tileData);
 
-//       tileData = preProcess(tileData);
+        int mapHeight = in.getHeight();
+        int mapWidth = in.getWidth();
+
+        Set<Integer> missingMappings = new HashSet<Integer>();
 
         for(Map.Entry<Integer, Map<Integer, Integer>> xEntry : tileData.entrySet()) {
             for (Map.Entry<Integer, Integer> yEntry : xEntry.getValue().entrySet()) {
@@ -65,8 +72,22 @@ public class QuakeMapConverter {
                     continue;
                 }
 
-                out.addBrush(convertTileToBrush(xEntry.getKey(), yEntry.getKey()));
+                String texture = textureMappings.getProperty(String.valueOf(yEntry.getValue()));
+                if (StringUtils.isBlank(texture)) {
+                    missingMappings.add(yEntry.getValue());
+                    texture = "default";
+                }
+
+                out.addBrush(convertTileToBrush(xEntry.getKey(),
+                                                yEntry.getKey(),
+                                                mapWidth,
+                                                mapHeight,
+                                                texture));
             }
+        }
+
+        if (missingMappings.size() > 0) {
+            log.warn(String.format("Undefined texture mappings for tile numbers: %s", missingMappings));
         }
     }
 
@@ -122,7 +143,12 @@ public class QuakeMapConverter {
         return processedMap;
     }
 
-    private static QuakeBrush convertTileToBrush(int x, int y) {
+    private QuakeBrush convertTileToBrush(int x,
+                                          int y,
+                                          int mapWidth,
+                                          int mapHeight,
+                                          String texture) {
+
         QuakeBrush brush = new QuakeBrush();
 
         for (int i=0; i<6; i++) {
@@ -133,8 +159,8 @@ public class QuakeMapConverter {
                 int index = (i * 9) + (j * 3);
 
                 // Switched around intentionally
-                int xValue = (64 * y + (64 * multipliers.get(index + 2)));
-                int yValue = (64 * x) + (64 * multipliers.get(index));
+                int xValue = (0 - mapHeight * 64 / 2) + (64 * y + (64 * multipliers.get(index + 2)));
+                int yValue = (mapWidth * 64 / 2) + (64 * x * -1) + (64 * multipliers.get(index));
 
                 int zValue = (256 * multipliers.get(index + 1));
 
@@ -142,6 +168,7 @@ public class QuakeMapConverter {
             }
 
             brush.addPlane(plane);
+            brush.setTexture(texture);
         }
 
         return brush;

@@ -20,7 +20,8 @@ public class CommonsCliOptionsAdapter {
                .setGameMapsLocation(commandLine.getOptionValue(Constants.OPTION_GAMEMAPS))
                .setMapHeadLocation(commandLine.getOptionValue(Constants.OPTION_MAPHEAD))
                .setWadFileName(commandLine.getOptionValue(Constants.WAD_FILE_NAME))
-               .setOutputDirectory(commandLine.getOptionValue(Constants.OPTION_OUTPUT_DIRECTORY));
+               .setOutputDirectory(commandLine.getOptionValue(Constants.OPTION_OUTPUT_DIRECTORY))
+               .setTextureMappingLocation(commandLine.getOptionValue(Constants.OPTION_TEXTURE_MAPPING_FILE));
 
 
         Map<String, List<String>> commands = new HashMap<String, List<String>>();
@@ -31,7 +32,8 @@ public class CommonsCliOptionsAdapter {
                 && !argName.equals(Constants.OPTION_GAMEMAPS)
                 && !argName.equals(Constants.OPTION_MAPHEAD)
                     && !argName.equals(Constants.WAD_FILE_NAME)
-                    && !argName.equals(Constants.OPTION_OUTPUT_DIRECTORY)) {
+                    && !argName.equals(Constants.OPTION_OUTPUT_DIRECTORY)
+                    && !argName.equals(Constants.OPTION_TEXTURE_MAPPING_FILE)) {
 
                 commands.put(argName, option.getValues() == null
                         ? new ArrayList<String>() : Arrays.asList(option.getValues()));

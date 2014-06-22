@@ -49,7 +49,7 @@ public class QuakeMapWriter {
                         sb.append(" ) ");
                     }
 
-                    out.write(sb.toString() + "GROUND1_8 " + "0 " + "0 " + "0 " + "1.0 " + "1.0\n");
+                    out.write(sb.toString() + brush.getTexture() + " " + "0 " + "0 " + "0 " + "1.0 " + "1.0\n");
                 }
 
                 out.write("}\n");

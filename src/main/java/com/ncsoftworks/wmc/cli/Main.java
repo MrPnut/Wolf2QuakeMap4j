@@ -25,6 +25,7 @@ public class Main {
 
         if (commandLine.hasOption(Constants.OPTION_HELP)) {
             HelpFormatter formatter = new HelpFormatter();
+            formatter.setWidth(80);
             formatter.printHelp("wmc4j", OptionsFactory.createOptions());
             return;
         }
@@ -37,6 +38,7 @@ public class Main {
         } catch(IllegalArgumentException e) {
             log.error("Caught exception", e);
             HelpFormatter formatter = new HelpFormatter();
+            formatter.setWidth(80);
             formatter.printHelp("wmc4j", OptionsFactory.createOptions());
         } catch(Exception e) {
             log.error("Caught exception", e);

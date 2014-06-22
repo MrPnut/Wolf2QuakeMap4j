@@ -43,6 +43,8 @@ public class OptionsFactory {
 
         options.addOption(OptionBuilder.withLongOpt(Constants.OPTION_OUTPUT_DIRECTORY)
                                        .withDescription("the directory that maps will be output to (default to ./)")
+                                       .hasArg()
+                                       .withArgName("directory")
                                        .create());
 
         options.addOption(OptionBuilder.withLongOpt(Constants.COMMAND_HELP)
@@ -50,7 +52,15 @@ public class OptionsFactory {
                                        .create());
 
         options.addOption(OptionBuilder.withLongOpt(Constants.WAD_FILE_NAME)
-                                       .withDescription("the file location of a wad file for .map's (defaults to base.wad")
+                                       .hasArg()
+                                       .withArgName("wad")
+                                       .withDescription("the file location of a wad file for .map's (defaults to base.wad)")
+                                       .create());
+
+        options.addOption(OptionBuilder.withLongOpt(Constants.OPTION_TEXTURE_MAPPING_FILE)
+                                       .withDescription("the location to a texture mapping properties file")
+                                       .hasArg()
+                                       .withArgName("properties")
                                        .create());
 
         return options;

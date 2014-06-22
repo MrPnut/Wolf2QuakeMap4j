@@ -16,12 +16,14 @@ public class ConverterOptions {
     private final String directory;
     private final String gameMapsLocation;
     private final String mapHeadLocation;
+    private final String textureMappingLocation;
     private final String wadFileName;
     private final String outputDirectory;
 
     public ConverterOptions(String directory,
                             String gameMapsLocation,
                             String mapHeadLocation,
+                            String textureMappingLocation,
                             String wadFileName,
                             String outputDirectory,
                             Map<String, List<String>> commands) {
@@ -29,6 +31,7 @@ public class ConverterOptions {
         this.directory = directory;
         this.gameMapsLocation = gameMapsLocation;
         this.mapHeadLocation = mapHeadLocation;
+        this.textureMappingLocation = textureMappingLocation;
         this.commands = commands;
         this.wadFileName = wadFileName;
         this.outputDirectory = outputDirectory == null ? "./" : outputDirectory;
@@ -51,6 +54,10 @@ public class ConverterOptions {
         return mapHeadLocation;
     }
 
+    public String getTextureMappingLocation() {
+        return textureMappingLocation;
+    }
+
     public String getWadFileName() { return wadFileName; }
 
     public String getOutputDirectory() {
@@ -63,6 +70,7 @@ public class ConverterOptions {
         private String directory;
         private String gameMapsLocation;
         private String mapHeadLocation;
+        private String textureMappingLocation;
         private String wadFileName;
         private String outputDirectory;
 
@@ -91,13 +99,24 @@ public class ConverterOptions {
             return this;
         }
 
+        public Builder setTextureMappingLocation(String textureMappingLocation) {
+            this.textureMappingLocation = textureMappingLocation;
+            return this;
+        }
+
         public Builder setOutputDirectory(String outputDirectory) {
             this.outputDirectory = outputDirectory;
             return this;
         }
 
         public ConverterOptions build() {
-            return new ConverterOptions(directory, gameMapsLocation, mapHeadLocation, wadFileName, outputDirectory, Collections.unmodifiableMap(commands));
+            return new ConverterOptions(directory,
+                                        gameMapsLocation,
+                                        mapHeadLocation,
+                                        textureMappingLocation,
+                                        wadFileName,
+                                        outputDirectory,
+                                        Collections.unmodifiableMap(commands));
         }
     }
 }
